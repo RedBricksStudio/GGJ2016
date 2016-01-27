@@ -6,6 +6,8 @@
 !/Assets/
 !/ProjectSettings/
 !.gitignore
+!README.md
+!LICENSE
 
 # And now re-ignore our filetypes
 
