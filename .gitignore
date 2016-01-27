@@ -1,0 +1,25 @@
+# Ignore everything
+/*
+/*/
+
+# Unignore the Unity Folders we want
+!/Assets/
+!/ProjectSettings/
+!.gitignore
+
+# And now re-ignore our filetypes
+
+# Sublime Text Workspaces & Projects
+*.sublime-*
+
+# Vim Swap Files
+*.sw?
+
+# Windows Files
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+
+# Linux
+.Trashes
