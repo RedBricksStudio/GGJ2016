@@ -29,7 +29,7 @@ public class RegularInput2D : RegularInput {
 	}
 
 	private void OnCollisionEnter2D(Collision2D coll) {
-		if(coll.gameObject.name == "Floor")
+		if(coll.gameObject.tag == "Platform")
 			grounded = true;
 	}
 }

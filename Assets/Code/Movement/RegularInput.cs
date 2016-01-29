@@ -18,12 +18,10 @@ abstract public class RegularInput : MonoBehaviour {
 		vMov = Input.GetAxis("Vertical");
 		
 		move(hMov, vMov);
-		if (Input.GetButtonDown("Jump")) {
+		if (Input.GetButtonDown("Jump"))
 			jump();
-		}
-		else if (Input.GetButton("Jump")) {
+		else if (Input.GetButton("Jump"))
 			extraJump();
-		}
 	}
 
 	abstract public void move(float vMov, float hMov);
