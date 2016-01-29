@@ -37,15 +37,20 @@ public class InstantiateFromTMX : MonoBehaviour {
         Dictionary<string, Vector2> enemies = new Dictionary<string, Vector2>();
         Regex identifyWypoint = new Regex("[0-9][0-9]");
         
-        for(int k=0;k < columns-1;k++) {
-            for (int l = 0; l < rows; l++)
-            {
+		bool extendwall = false;
+		int colStartWall = 0;
+		int colEndWall = 0;
+        
+		for (int l = 0; l < rows; l++) {
+			
+			extendwall = false;
+			
+			for(int k=0;k < columns-1;k++) {
                 string val = tiles[k, (rows - l - 1)];
 				
 				Debug.Log("Loading map... rows[" + (rows - l - 1) + "] colums [" + l +"] value [" + val + "]" );
                 
-				if (val.Equals("WW"))
-                {
+				if (val.Equals("WW")) {
                     GameObject newWall = (GameObject)Instantiate(wall, new Vector3(k * offset, l * offset, 0), Quaternion.identity);                    
                 } else if (val.Equals("PP")) {
                     GameObject.Instantiate(player, new Vector3(k * offset, l * offset, 0), Quaternion.identity);
