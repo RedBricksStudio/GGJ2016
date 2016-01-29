@@ -29,7 +29,7 @@ public class InstantiateFromTMX : MonoBehaviour {
 
 		Debug.Log("Loading map... rows[" + rows + "] colums [" + columns +"]");
 
-        float offset = 0.1f;
+        float offset = 0.75f;
         GameObject wp= null;
 
         Dictionary<string, Transform> wps = new Dictionary<string, Transform>();
