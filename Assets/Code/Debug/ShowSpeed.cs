@@ -9,6 +9,6 @@ public class ShowSpeed : MonoBehaviour {
 	}
 
 	private void OnGUI() {
-    	GUI.Label(new Rect(Screen.width - 100, 0, 100, 30), string.Format("Speed: {0}", (body.velocity)));        
+    	GUI.Label(new Rect(Screen.width - 125, 0, 125, 30), string.Format("Speed: {0}", (body.velocity)));        
  	}
  }
