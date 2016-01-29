@@ -19,8 +19,8 @@ public class RegularInput2D : RegularInput {
 	}
 
 	override public void extraJump() {
-			if (Time.time - lastJumpTime < .09)
-				body.AddForce(Vector2.up * jumpHeight/3);
+		if (Time.time - lastJumpTime < .09)
+			body.AddForce(Vector2.up * jumpHeight/3);
 	}
 
 
@@ -29,7 +29,7 @@ public class RegularInput2D : RegularInput {
 	}
 
 	private void OnCollisionEnter2D(Collision2D coll) {
-		if(coll.gameObject.tag == "Platform")
+		if (coll.gameObject.tag == "Platform" && body.velocity.y < 0.1f)
 			grounded = true;
 	}
 }
