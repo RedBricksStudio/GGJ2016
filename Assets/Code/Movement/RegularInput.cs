@@ -2,8 +2,9 @@ using UnityEngine;
 
 abstract public class RegularInput : MonoBehaviour {
 	// Attributes
-	public float speed = 1;
-	public float jumpHeight = 1;
+	public float speed = 1f;
+	public float jumpHeight = 1f;
+	public float extraJumpBoost = 1f;
 
 	private float vMov;
 	private float hMov;

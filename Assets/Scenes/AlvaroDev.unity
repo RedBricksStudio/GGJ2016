@@ -385,6 +385,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   jumpHeight: 200
+  extraJumpBoost: 40
+  extraJumpTime: 0.15
+  ignoreExtraJumpTime: 0.05
 --- !u!61 &533774808
 BoxCollider2D:
   m_ObjectHideFlags: 0

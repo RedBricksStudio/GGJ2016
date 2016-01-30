@@ -6,6 +6,11 @@ public class RegularInput2D : RegularInput {
 	private bool grounded = false;
 	private float lastJumpTime = 0f;
 
+	[SerializeField]
+	private float extraJumpTime = .15f;
+	[SerializeField]
+	private float ignoreExtraJumpTime = .05f;
+
 	override public void move(float hMov, float vMov) {
 		body.AddForce(new Vector2(hMov * speed, 0));
 	}
@@ -19,8 +24,8 @@ public class RegularInput2D : RegularInput {
 	}
 
 	override public void extraJump() {
-		if (Time.time - lastJumpTime < .15 && Time.time - lastJumpTime > .05)
-			body.AddForce(Vector2.up * jumpHeight/5);
+		if (Time.time - lastJumpTime < extraJumpTime && Time.time - lastJumpTime > ignoreExtraJumpTime)
+			body.AddForce(Vector2.up * extraJumpBoost);
 	}
 
 
