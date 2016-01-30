@@ -15,7 +15,9 @@ public class BossAIController : MonoBehaviour {
 
 	//Private Components
 	Transform m_tr;
-	Rigidbody2D m_rb;
+	Rigidbody2D m_rb;	
+	Animator m_anim;
+	
 	public GameObject Player;
 	public Transform upperRightCorner;
 	private Transform m_playerToChase;
@@ -36,11 +38,18 @@ public class BossAIController : MonoBehaviour {
 	private float jumpDistancePadding = 1.0f;
 	[SerializeField]
 	private bool jumpEnabled = false;
+	
+	private bool lookingRight = true;
+	
+	// Animation parameters
+	private bool isWalking = false;
+	private bool isIdle = false;
 
 	// Use this for initialization
 	void Start () {
 		m_tr = GetComponent<Transform>();
 		m_rb = GetComponent<Rigidbody2D>();
+		m_anim = GetComponent<Animator>();
 		if (Player != null) {
 			m_playerToChase = Player.transform;
 		}
@@ -137,7 +146,7 @@ public class BossAIController : MonoBehaviour {
 
 	private void handleIdleEntered()
 	{
-		
+		markUniqueAnimator("idle");
 	}    
     private void handleIdle()
 	{		
@@ -148,7 +157,7 @@ public class BossAIController : MonoBehaviour {
 
 	private void handleStunnedEntered()
 	{
-		Debug.Log("Stunned!");
+		markUniqueAnimator("idle");
 		StartCoroutine(Wait(2));
 	}
    
@@ -164,10 +173,17 @@ public class BossAIController : MonoBehaviour {
 
 	private void handleChargingEntered()
 	{	
+		if (needsToBeFlipped()) {
+			Flip();
+		}
+		
+		markUniqueAnimator("walking");			
+		
 		recalculateVelocity();
 		m_rb.SetVelocityX(dir.x);
 		vel = dir.x;			
 	}	
+	
 
 	private void handleCharging()
 	{
@@ -177,7 +193,6 @@ public class BossAIController : MonoBehaviour {
 		if (jumpEnabled) {	
 			if ((Mathf.Abs(m_playerToChase.position.x - m_tr.position.x) < (jumpDistance + jumpDistancePadding)) &&
 				(Mathf.Abs(m_playerToChase.position.x - m_tr.position.x) > (jumpDistance - jumpDistancePadding))) {
-					Debug.Log("JUMP");
 					jump();
 			}
 		}
@@ -198,11 +213,15 @@ public class BossAIController : MonoBehaviour {
 	private void handleLookAroundEntered()
 	{
 		lookingAround = true;
+		if (needsToBeFlipped()) {
+			Flip();
+		}
 	}
 	
 	private void handleLookAround()
 	{
 		if (playerIsInCage() && lookingAround) {	
+			Debug.Log("Player in cage");
 			StartCoroutine(Wait(1f));
 			lookingAround = false;
 		}
@@ -218,7 +237,7 @@ public class BossAIController : MonoBehaviour {
 			(coll.transform.position.x * m_tr.position.x >= 0)) 
 		{
 			if(!coll.gameObject.tag.Equals("Player")) {
-				Debug.Log("Collided with a wall");
+				Debug.Log("Boom");
 				ChangeState(BossStates.Stunned);    
 			} else {
 				//TODO: Attack player
@@ -226,7 +245,7 @@ public class BossAIController : MonoBehaviour {
 		}
     }
 	
-	private void recalculateVelocity() {
+	private void recalculateVelocity() {		
 		dir = (m_playerToChase.position - m_tr.position).normalized; 
 		dir*= chargeSpeed;
 	}
@@ -234,13 +253,12 @@ public class BossAIController : MonoBehaviour {
 	private bool playerIsInCage()
     {
         return ((m_playerToChase.position.x < upperRightCorner.position.x) &&
-				(m_playerToChase.position.y < upperRightCorner.position.y));
+				(m_playerToChase.position.y < upperRightCorner.position.y));		
     }
 	
 	private IEnumerator Wait(float v)
     {
-		Debug.Log("Im cahrging");
-        yield return new WaitForSeconds(v);
+		yield return new WaitForSeconds(v);
 		recalculateVelocity();
 		if (playerIsInCage()) {		
 			ChangeState(BossStates.Charging);
@@ -249,5 +267,19 @@ public class BossAIController : MonoBehaviour {
 		}
     }
 
+	private bool needsToBeFlipped() {
+		return ((lookingRight && (m_playerToChase.position.x < m_tr.position.x))  || 
+				(!lookingRight && (m_playerToChase.position.x > m_tr.position.x)));		
+	}
+	
+	private void Flip() {
+		m_tr.SetScaleX(m_tr.localScale.x * (-1));		
+		lookingRight = !lookingRight;
+	}
+	
+	private void markUniqueAnimator(string s) {
+		
+		m_anim.SetTrigger(s);
+	}
 	
 }
