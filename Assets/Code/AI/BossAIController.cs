@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using KWorks.Wrappers;
+using System;
 
 public class BossAIController : MonoBehaviour {
 
@@ -16,9 +17,14 @@ public class BossAIController : MonoBehaviour {
 	Transform m_tr;
 	Rigidbody2D m_rb;
 	public GameObject Player;
-	private Transform m_playerToChase;	
+	public Transform upperRightCorner;
+	private Transform m_playerToChase;
+			
 	Vector3 dir;
+	float vel;
 	
+		
+	[SerializeField]
 	private float charge_speed = 3f;
 
 	// Use this for initialization
@@ -28,10 +34,14 @@ public class BossAIController : MonoBehaviour {
 		if (Player != null) {
 			m_playerToChase = Player.transform;
 		}
-		ChangeState(BossStates.Charging);
+		recalculateVelocity();
+		ChangeState(BossStates.Idle);
 	}
 	
 	void FixedUpdate () {
+		if (!playerIsInCage())
+			ChangeState(BossStates.Idle);
+		
 		onState(m_state);
 	}
 	
@@ -52,7 +62,7 @@ public class BossAIController : MonoBehaviour {
 		switch (m_state) 
 		{
 		case BossStates.Idle:
-			handleIdleEntered ();
+			handleIdleEntered();
 			break;
 		case BossStates.Charging:
 			handleChargingEntered();
@@ -106,23 +116,38 @@ public class BossAIController : MonoBehaviour {
 
 	}
 
-	//Idle
 	private void handleIdleEntered()
-	{}
+	{}    
+    private void handleIdle()
+	{
+		if (playerIsInCage()) {
+			ChangeState(BossStates.Charging);
+		}
+	}
 
-	private void handleIdle()
-	{}
+    private bool playerIsInCage()
+    {
+        return ((m_playerToChase.position.x < upperRightCorner.position.x) &&
+				(m_playerToChase.position.y < upperRightCorner.position.y));
+    }
 
-	private void handleIdleExit()
+    private void handleIdleExit()
 	{}
 
 	private void handleStunnedEntered()
 	{
 		Debug.Log("Stunned!");
-		ChangeState(BossStates.Charging);
+		StartCoroutine(Wait(2));
 	}
 
-	private void handleStunned()
+    private IEnumerator Wait(int v)
+    {
+        yield return new WaitForSeconds(v);
+		recalculateVelocity();
+		ChangeState(BossStates.Charging);
+    }
+
+    private void handleStunned()
 	{
 		
 	}
@@ -133,20 +158,18 @@ public class BossAIController : MonoBehaviour {
 	}
 
 	private void handleChargingEntered()
-	{
-		if(dir.normalized.Equals(Vector3.right)) {
-			dir = Vector3.left;
-		} else {
-			dir = Vector3.right;
-		}	
-		dir*= charge_speed;
-		Debug.Log(dir);	
-		m_rb.SetVelocityX(dir.x);			
-	}
+	{	
+		recalculateVelocity();
+		m_rb.SetVelocityX(dir.x);
+		vel = dir.x;			
+	}	
 
 	private void handleCharging()
 	{
-			
+		if(m_rb.velocity.x != vel) {
+			m_rb.SetVelocityX(vel);
+		}	
+				
 	}
 
 	private void handleChargingExit()
@@ -155,10 +178,21 @@ public class BossAIController : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter2D(Collision2D coll) {
-    	if (coll.transform.position.y >= m_tr.position.y) {
-			Debug.Log("Collided with a wall");
-			ChangeState(BossStates.Stunned);    
+    	if ((coll.transform.position.y >= m_tr.position.y) && 
+			(coll.transform.position.x * m_tr.position.x >= 0)) 
+		{
+			if(!coll.gameObject.tag.Equals("Player")) {
+				Debug.Log("Collided with a wall");
+				ChangeState(BossStates.Stunned);    
+			} else {
+				//TODO: Attack player
+			}
 		}
     }
+	
+	private void recalculateVelocity() {
+		dir = (m_playerToChase.position - m_tr.position).normalized; 
+		dir*= charge_speed;
+	}
 	
 }
