@@ -10,4 +10,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
   - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+  - enabled: 1
     path: Assets/Scenes/GoodEnding.unity
+  - enabled: 1
+    path: Assets/Scenes/BadEnding.unity
