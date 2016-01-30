@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System;
+using KWorks.Wrappers;
 
 public class InstantiateFromTMX : MonoBehaviour {
 
@@ -35,23 +37,38 @@ public class InstantiateFromTMX : MonoBehaviour {
         Dictionary<string, Transform> wps = new Dictionary<string, Transform>();
 
         Dictionary<string, Vector2> enemies = new Dictionary<string, Vector2>();
-        Regex identifyWypoint = new Regex("[0-9][0-9]");
+        //Regex identifyWypoint = new Regex("[0-9][0-9]");
         
-		bool extendwall = false;
-		int colStartWall = 0;
-		int colEndWall = 0;
+		bool extendingWall = false;
+		Vector2 wallStartPoint = new Vector2(0,0);
+		int wallSize = 0;
         
 		for (int l = 0; l < rows; l++) {
 			
-			extendwall = false;
+			if (extendingWall) {
+				//Instantiate wall
+				instantiateWall(wall, wallStartPoint, wallSize);
+				wallSize = 0;
+				extendingWall = false;
+			}			
 			
 			for(int k=0;k < columns-1;k++) {
                 string val = tiles[k, (rows - l - 1)];
 				
 				Debug.Log("Loading map... rows[" + (rows - l - 1) + "] colums [" + l +"] value [" + val + "]" );
                 
+				if (!val.Equals("WW") && extendingWall) {
+					instantiateWall(wall, wallStartPoint, wallSize);
+					wallSize = 0;
+					extendingWall = false;
+				}
+								
 				if (val.Equals("WW")) {
-                    GameObject newWall = (GameObject)Instantiate(wall, new Vector3(k * offset, l * offset, 0), Quaternion.identity);                    
+					if (!extendingWall) {
+						wallStartPoint.x = k * offset;
+						wallStartPoint.y = l * offset;
+					}
+					wallSize++;
                 } else if (val.Equals("PP")) {
                     GameObject.Instantiate(player, new Vector3(k * offset, l * offset, 0), Quaternion.identity);
                 } else if (val.Contains("E")) {
@@ -85,11 +102,21 @@ public class InstantiateFromTMX : MonoBehaviour {
             }           
             //enemyGO.GetComponent<EnemyStateMachine>().addWaypoints(wpss);
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
+	}    
+
+
+    // Update is called once per frame
+    void Update () {
 	
 
 	}
+	
+	private void instantiateWall(GameObject wall, Vector2 wallStartPoint, int wallSize)
+    {
+        GameObject newWall = (GameObject)Instantiate(wall, wallStartPoint, Quaternion.identity);
+		newWall.transform.SetScaleX(newWall.transform.localScale.x * wallSize);
+		RectTransform rt = (RectTransform)newWall.transform;
+		newWall.transform.SetX(newWall.transform.position.x + rt.rect.width);
+    }
+	
 }
