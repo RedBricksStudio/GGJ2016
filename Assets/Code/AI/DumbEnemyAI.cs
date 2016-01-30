@@ -44,6 +44,10 @@ public class DumbEnemyAI : MonoBehaviour {
 		onState(m_state);
 	}
 
+	void onDamage(){
+		Destroy (gameObject);
+	}
+
 	public void ChangeState(EnemyStates newState)
 	{
 		onStateExit(m_state);

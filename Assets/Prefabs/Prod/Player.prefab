@@ -29,7 +29,7 @@ GameObject:
   - 61: {fileID: 6118962}
   - 114: {fileID: 11468156}
   - 114: {fileID: 11477648}
-  - 114: {fileID: 11434724}
+  - 114: {fileID: 11462440}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -113,7 +113,7 @@ MonoBehaviour:
   minimumTimeToShoot: 0.2
   extraJumpTime: 0.15
   ignoreExtraJumpTime: 0.05
---- !u!114 &11434724
+--- !u!114 &11462440
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -121,9 +121,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 187088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 0ec39aebb438d6d47ae2a36af576ac52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingTag: 
 --- !u!114 &11468156
 MonoBehaviour:
   m_ObjectHideFlags: 1
