@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-
 using KWorks.Wrappers;
 
 public class BulletScript : MonoBehaviour {
