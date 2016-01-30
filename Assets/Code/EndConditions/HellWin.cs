@@ -4,6 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class HellWin : MonoBehaviour {
 	private void OnDestroy() {
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		SceneManager.LoadScene("HellEnding");
 	}
 }
