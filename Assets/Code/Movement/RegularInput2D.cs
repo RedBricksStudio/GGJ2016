@@ -5,7 +5,12 @@ public class RegularInput2D : RegularInput {
 	private Rigidbody2D body;
 	private bool grounded = false;
 	private float lastJumpTime = 0f;
+	private float lastShootTime = 0f;
+	public GameObject BulletPrefab;
+	public Transform ProjectileSpawn;
 
+	[SerializeField]
+	private float minimumTimeToShoot = 0.2f;
 	[SerializeField]
 	private float extraJumpTime = .15f;
 	[SerializeField]
@@ -31,6 +36,13 @@ public class RegularInput2D : RegularInput {
 
 	override public void getControl() {
 		body = GetComponent<Rigidbody2D>();
+	}
+
+	override public void Shoot() {
+		if (Time.time - lastShootTime > minimumTimeToShoot) {
+			GameObject.Instantiate (BulletPrefab, ProjectileSpawn.position, ProjectileSpawn.rotation);
+			lastShootTime = Time.time;
+		}
 	}
 
 	private void OnCollisionEnter2D(Collision2D coll) {

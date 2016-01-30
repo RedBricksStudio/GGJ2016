@@ -17,7 +17,7 @@ public class DumbEnemyAI : MonoBehaviour {
 	private int m_currWaypoint = 0;
 	public Transform[] waypoints;
 	public bool m_waypointReached = false;
-	public GameObject Player;
+	GameObject Player;
 
 	private Transform m_playerToChase;
 	private float patrol_speed = 2f;
@@ -34,6 +34,7 @@ public class DumbEnemyAI : MonoBehaviour {
 	void Start () {
 		m_tr = GetComponent<Transform>();
 		m_rb = GetComponent<Rigidbody2D>();
+		Player = GameObject.FindGameObjectWithTag ("Player");
 		m_playerToChase = Player.transform;
 		ChangeState(EnemyStates.Patrol);
 	}
@@ -127,8 +128,6 @@ public class DumbEnemyAI : MonoBehaviour {
 	private void handlePatrolEntered()
 	{
 		dir = (waypoints [m_currWaypoint].transform.position - m_tr.position);
-		Debug.Log ("Waypoint pos x:" + waypoints [m_currWaypoint].transform.position.x);
-		Debug.Log ("Player x:" + m_tr.position.x);
 		dir = dir.normalized;
 		dir*= patrol_speed;
 		m_rb.SetVelocityX(dir.x);

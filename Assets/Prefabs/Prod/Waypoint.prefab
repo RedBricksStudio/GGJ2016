@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 456532}
   - 61: {fileID: 6146946}
-  - 114: {fileID: 11448240}
+  - 114: {fileID: 11493318}
   m_Layer: 0
   m_Name: Waypoint
   m_TagString: Untagged
@@ -43,7 +43,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
---- !u!114 &11448240
+--- !u!114 &11493318
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 125690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f12914361f02ea54ebc9a71f8d8879d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 0}
