@@ -20,7 +20,7 @@ public class DumbEnemyAI : MonoBehaviour {
 	GameObject Player;
 
 	private Transform m_playerToChase;
-	private float patrol_speed = 2f;
+	private float patrol_speed = 1.5f;
 	private float chasing_speed = 3f;
 	public bool playerInVision;
 	Vector3 dir;
@@ -155,6 +155,7 @@ public class DumbEnemyAI : MonoBehaviour {
 		{
 			Debug.Log ("<color=red> Change:</color>");
 			m_currWaypoint = (m_currWaypoint + 1) % waypoints.GetLength(0);
+			Debug.Log("Waypoint " + m_currWaypoint);
 			m_waypointReached = false;
 		}
 	}
