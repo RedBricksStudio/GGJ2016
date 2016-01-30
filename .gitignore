@@ -10,6 +10,7 @@
 !LICENSE
 
 # And now re-ignore our filetypes
+*.meta
 
 # Sublime Text Workspaces & Projects
 *.sublime-*
