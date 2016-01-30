@@ -34,6 +34,8 @@ public class BossAIController : MonoBehaviour {
 	private float jumpDistance = 20.0f;
 	[SerializeField]
 	private float jumpDistancePadding = 1.0f;
+	[SerializeField]
+	private bool jumpEnabled = false;
 
 	// Use this for initialization
 	void Start () {
@@ -47,7 +49,7 @@ public class BossAIController : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		if (!playerIsInCage() && !m_state.Equals(BossStates.LookAround))
+		if (!playerIsInCage() && !m_state.Equals(BossStates.LookAround) && !m_state.Equals(BossStates.Charging))
 			ChangeState(BossStates.LookAround);
 		
 		onState(m_state);
@@ -171,13 +173,22 @@ public class BossAIController : MonoBehaviour {
 	{
 		if(m_rb.velocity.x != vel) {
 			m_rb.SetVelocityX(vel);
-		}	
-		if ((Mathf.Abs(m_playerToChase.position.x - m_tr.position.x) < (jumpDistance + jumpDistancePadding)) &&
-			(Mathf.Abs(m_playerToChase.position.x - m_tr.position.x) > (jumpDistance - jumpDistancePadding))) {
-				Debug.Log("JUMP");
-				m_rb.AddForce(new Vector2(0.0f, jumpForce));
+		}
+		if (jumpEnabled) {	
+			if ((Mathf.Abs(m_playerToChase.position.x - m_tr.position.x) < (jumpDistance + jumpDistancePadding)) &&
+				(Mathf.Abs(m_playerToChase.position.x - m_tr.position.x) > (jumpDistance - jumpDistancePadding))) {
+					Debug.Log("JUMP");
+					jump();
 			}
-	}    
+		}
+	}
+
+    private void jump()
+    {
+		if (m_rb.velocity.y < 0.0001f) {
+        	m_rb.AddForce(new Vector2(0.0f, jumpForce));
+		}
+    }
 
     private void handleChargingExit()
 	{
@@ -230,8 +241,12 @@ public class BossAIController : MonoBehaviour {
     {
 		Debug.Log("Im cahrging");
         yield return new WaitForSeconds(v);
-		recalculateVelocity();		
-		ChangeState(BossStates.Charging);
+		recalculateVelocity();
+		if (playerIsInCage()) {		
+			ChangeState(BossStates.Charging);
+		} else {
+			ChangeState(BossStates.LookAround);
+		}
     }
 
 	
