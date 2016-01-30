@@ -1,18 +1,21 @@
 using UnityEngine;
 
+[RequireComponent (typeof (Camera))]
 public class FollowPlayer : MonoBehaviour {
-	[SerializeField]
-	private float cameraDistance = 10f;
-
 	private Transform player;
-	private Transform cam;
+	private Transform camtrf;
+	private Camera cam;
+
+	[SerializeField]
+	private float yOffset = 0f;
 
 	private void Start() {
 		player = GameObject.FindWithTag("Player").GetComponent<Transform>();
-		cam = GetComponent<Transform>();
+		camtrf = GetComponent<Transform>();
+		cam = GetComponent<Camera>();
 	}
 
 	private void Update() {
-		cam.position = new Vector3(player.position.x, player.position.y, player.position.z - cameraDistance);
+		camtrf.position = new Vector3(player.position.x, player.position.y + (yOffset * cam.orthographicSize), player.position.z - 10);
 	}
 }

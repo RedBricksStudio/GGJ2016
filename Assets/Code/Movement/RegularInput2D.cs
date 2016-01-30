@@ -19,8 +19,8 @@ public class RegularInput2D : RegularInput {
 	}
 
 	override public void extraJump() {
-		if (Time.time - lastJumpTime < .09)
-			body.AddForce(Vector2.up * jumpHeight/3);
+		if (Time.time - lastJumpTime < .15 && Time.time - lastJumpTime > .05)
+			body.AddForce(Vector2.up * jumpHeight/5);
 	}
 
 
