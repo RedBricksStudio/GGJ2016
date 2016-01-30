@@ -13,21 +13,20 @@ public class BulletScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Player = GameObject.FindGameObjectWithTag ("Player");
+		Player = GameObject.FindGameObjectWithTag("Player");
 		rig_bdy = GetComponent<Rigidbody2D>();
 		playerInput = Player.GetComponent<RegularInput> ();
-		if(playerInput.looking_right){
+		if (playerInput.looking_right) {
 			dir = Player.transform.right;
 			locScale = gameObject.transform.localScale;
 			locScale.x *= -1;
 			gameObject.transform.localScale = locScale;
 		}
-		else{
+		else {
 			dir =- Player.transform.right;
 		}
 		dir = dir.normalized;
 		dir*= speed;
-		Debug.Log ("Velocidad x:" + dir);
 		rig_bdy.SetVelocityX (dir.x);
 
 	}
