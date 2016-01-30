@@ -8,6 +8,8 @@ public class RegularInput2D : RegularInput {
 	private float lastShootTime = 0f;
 	public GameObject BulletPrefab;
 	public Transform ProjectileSpawn;
+	public GameObject Player;
+	RegularInput playerInput;
 
 	[SerializeField]
 	private float minimumTimeToShoot = 0.2f;

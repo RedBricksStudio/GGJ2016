@@ -8,7 +8,8 @@ public class BulletScript : MonoBehaviour {
 	public GameObject Player;
 	Rigidbody2D rig_bdy;
 	Vector3 dir;
-	float speed = 7f;
+	float speed = 6f;
+	Vector3 locScale;
 
 	RegularInput playerInput;
 
@@ -19,6 +20,9 @@ public class BulletScript : MonoBehaviour {
 		playerInput = Player.GetComponent<RegularInput> ();
 		if(playerInput.looking_right){
 			dir =Player.transform.right;
+			locScale = gameObject.transform.localScale;
+			locScale.x *= -1;
+			gameObject.transform.localScale = locScale;
 		}
 		else{
 			dir =-Player.transform.right;
