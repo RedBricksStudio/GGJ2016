@@ -445,7 +445,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.54, y: 0.89, z: -1.8061523}
   m_LocalScale: {x: 5, y: 4, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1728176247}
   m_Father: {fileID: 0}
   m_RootOrder: 3
 --- !u!114 &1377877457
@@ -459,10 +460,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00db56080a3cfca46a006447feac82fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
+  debug: 1
   Player: {fileID: 1405499867}
   upperRightCorner: {fileID: 1728176247}
-  charge_speed: 3
+  chargeSpeed: 6
+  jumpForce: 2000
+  jumpDistance: 10
 --- !u!50 &1377877458
 Rigidbody2D:
   serializedVersion: 2
@@ -574,8 +577,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1728176246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.2, y: 2.08, z: -1.8061523}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 2.348, y: 0.29749998, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.25, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 1377877456}
+  m_RootOrder: 0
