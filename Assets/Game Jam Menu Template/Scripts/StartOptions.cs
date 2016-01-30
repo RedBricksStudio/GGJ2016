@@ -49,7 +49,6 @@ public class StartOptions : MonoBehaviour {
 			//Call the StartGameInScene function to start game without loading a new scene.
 			StartGameInScene();
 		}
-
 	}
 
 
@@ -65,18 +64,17 @@ public class StartOptions : MonoBehaviour {
 	}
 
 	public void StartGameInScene() {
-		//Pause button now works if escape is pressed since we are no longer in Main menu.
+		// Pause button now works if escape is pressed since we are no longer in Main menu.
 		inMainMenu = false;
 
-		//If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic, using length of fadeColorAnimationClip as time. 
-		//To change fade time, change length of animation "FadeToColor"
+		// If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic, using length of fadeColorAnimationClip as time. 
+		// To change fade time, change length of animation "FadeToColor"
 		if (changeMusicOnStart)			
-			Invoke("PlayNewMusic", fadeAlphaAnimationClip.length); //Wait until game has started, then play new music
+			Invoke("PlayNewMusic", fadeAlphaAnimationClip.length); // Wait until game has started, then play new music
 		
-		//Set trigger for animator to start animation fading out Menu UI
-		animMenuAlpha.SetTrigger("fade");
+		animMenuAlpha.SetTrigger("fade"); // Set trigger for animator to start animation fading out Menu UI
 
-		//Wait until game has started, then hide the main menu
+		// Wait until game has started, then hide the main menu
 		Invoke("HideDelayed", fadeAlphaAnimationClip.length);
 		Debug.Log("Game started in same scene! Put your game starting stuff here.");
 	}
