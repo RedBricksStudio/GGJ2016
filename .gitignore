@@ -19,6 +19,7 @@
 
 # Windows Files
 Desktop.ini
+desktop.ini*
 Thumbs.db
 ehthumbs.db
 $RECYCLE.BIN/
