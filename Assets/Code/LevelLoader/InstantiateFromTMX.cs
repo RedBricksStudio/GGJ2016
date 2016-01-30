@@ -24,8 +24,7 @@ public class InstantiateFromTMX : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         string[,] tiles = CSVReader.SplitCsvGrid(mapa.text);
-        CSVReader.DebugOutputGrid(tiles);
-	
+        
 		rows = tiles.GetLength(1) - 1;
 		columns = tiles.GetLength(0) - 1;
 
@@ -38,37 +37,14 @@ public class InstantiateFromTMX : MonoBehaviour {
 
         Dictionary<string, Vector2> enemies = new Dictionary<string, Vector2>();
         //Regex identifyWypoint = new Regex("[0-9][0-9]");
-        
-		bool extendingWall = false;
-		Vector2 wallStartPoint = new Vector2(0,0);
-		int wallSize = 0;
-        
-		for (int l = 0; l < rows; l++) {
-			
-			if (extendingWall) {
-				//Instantiate wall
-				instantiateWall(wall, wallStartPoint, wallSize);
-				wallSize = 0;
-				extendingWall = false;
-			}			
-			
+        		
+		
+        for (int l = 0; l < rows; l++) {
 			for(int k=0;k < columns-1;k++) {
-                string val = tiles[k, (rows - l - 1)];
-				
-				Debug.Log("Loading map... rows[" + (rows - l - 1) + "] colums [" + l +"] value [" + val + "]" );
-                
-				if (!val.Equals("WW") && extendingWall) {
-					instantiateWall(wall, wallStartPoint, wallSize);
-					wallSize = 0;
-					extendingWall = false;
-				}
+                string val = tiles[k, (rows - l - 1)];			
 								
 				if (val.Equals("WW")) {
-					if (!extendingWall) {
-						wallStartPoint.x = k * offset;
-						wallStartPoint.y = l * offset;
-					}
-					wallSize++;
+					 GameObject.Instantiate(wall, new Vector3(k * offset, l * offset, 0), Quaternion.identity);
                 } else if (val.Equals("PP")) {
                     GameObject.Instantiate(player, new Vector3(k * offset, l * offset, 0), Quaternion.identity);
                 } else if (val.Contains("E")) {
@@ -110,13 +86,5 @@ public class InstantiateFromTMX : MonoBehaviour {
 	
 
 	}
-	
-	private void instantiateWall(GameObject wall, Vector2 wallStartPoint, int wallSize)
-    {
-        GameObject newWall = (GameObject)Instantiate(wall, wallStartPoint, Quaternion.identity);
-		newWall.transform.SetScaleX(newWall.transform.localScale.x * wallSize);
-		RectTransform rt = (RectTransform)newWall.transform;
-		newWall.transform.SetX(newWall.transform.position.x + rt.rect.width);
-    }
-	
+		
 }

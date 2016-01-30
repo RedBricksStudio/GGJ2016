@@ -1,0 +1,9 @@
+WW [Wall] 		-> Plataforma solida, se instanciara un sprite (skin) u otro dependiendo de su posicion relativa al centro.
+CR [Crate] 		-> Caja movible.
+PP [Player]		-> Punto de partida del jugador.
+Ex [Enemigo]	-> Punto de partida del enemigo. X identifica al enemigo (e.g. E0 es el enemigo 0).
+xy [P.Patrulla]	-> Punto de patrulla numero y del enemigo x (e.g. 42 es el tercer punto de patrulla del enemigo 4).
+DD [Muerte]		-> Zona mortal, el jugador muere cuando colisiona con ella.
+BB [Boss]		-> Punto de spawneo del boss
+---------------------------
+SP [Spikes]             -> Trampa de pinchos
