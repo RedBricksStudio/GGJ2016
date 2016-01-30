@@ -49,4 +49,8 @@ public class RegularInput2D : RegularInput {
 		if (coll.gameObject.tag == "Platform" && body.velocity.y < 0.1f)
 			grounded = true;
 	}
+	
+	public bool getGrounded() {
+		return grounded;
+	}
 }

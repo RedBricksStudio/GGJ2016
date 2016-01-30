@@ -41,9 +41,6 @@ public class BossAIController : MonoBehaviour {
 	
 	private bool lookingRight = true;
 	
-	// Animation parameters
-	private bool isWalking = false;
-	private bool isIdle = false;
 
 	// Use this for initialization
 	void Start () {
@@ -277,8 +274,7 @@ public class BossAIController : MonoBehaviour {
 		lookingRight = !lookingRight;
 	}
 	
-	private void markUniqueAnimator(string s) {
-		
+	private void markUniqueAnimator(string s) {		
 		m_anim.SetTrigger(s);
 	}
 	
