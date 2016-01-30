@@ -12,8 +12,12 @@ public class PlayerAnimationController : MonoBehaviour {
 	
 	// Private fields	
 	private bool lookingRight = false;	
+	[SerializeField]
 	private bool jumping = false;
+	[SerializeField]
 	private bool walking = false;
+	[SerializeField]
+	private bool idle = false;
 
 	// Use this for initialization
 	void Start () {
@@ -23,26 +27,36 @@ public class PlayerAnimationController : MonoBehaviour {
 		m_in = GetComponent<RegularInput2D>();
 	}
 	
-	// Update is called once per frame
 	void Update () {	
 		if (needsToBeFlipped()) {
 			Flip();
-		}
+		}		
 		
-		if (!m_in.getGrounded() && !jumping) {
-			m_anim.SetTrigger("jump");
-			jumping = true;
-		} else if (m_in.getGrounded() && jumping){
-			m_anim.SetTrigger("idle");
-			walking = false;			
-			jumping = false;			
-		} else {
-			if (Mathf.Abs(m_rb.velocity.x) > 0.5f && !walking)	{
-				m_anim.SetTrigger("walk");
-				walking = true;
-			} else if (Mathf.Abs(m_rb.velocity.x) <= 0.5f)	{
-				m_anim.SetTrigger("idle");
+		if (!m_in.getGrounded()) {
+			if (!jumping) {
+				m_anim.SetTrigger("jump");
+				jumping = true;
+				idle = false;
 				walking = false;
+			}
+		} else {
+			if (jumping) {
+				if (!idle)	{		
+					m_anim.SetTrigger("idle");
+					idle = true;			
+					walking = false;			
+					jumping = false;
+				}		
+			} else {
+				if (Mathf.Abs(m_rb.velocity.x) <= 0.5f && !idle)	{				
+					m_anim.SetTrigger("idle");
+					idle = true;
+					walking = false;
+				} else if (Mathf.Abs(m_rb.velocity.x) > 0.5f && !walking)	{
+					m_anim.SetTrigger("walk");
+					walking = true;
+					idle = false;
+				} 		
 			}
 		}
 	}
