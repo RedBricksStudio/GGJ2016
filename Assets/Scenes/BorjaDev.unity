@@ -329,7 +329,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 452890, guid: 79ac350ef2048bd4e9041b8dba4a8f38, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 79ac350ef2048bd4e9041b8dba4a8f38, type: 2}
@@ -493,7 +493,7 @@ Transform:
   m_Children:
   - {fileID: 1938539044}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
 --- !u!95 &936107550
 Animator:
   serializedVersion: 3
@@ -524,6 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumping: 0
   walking: 0
+  idle: 0
 --- !u!1 &1377877454
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +587,7 @@ Transform:
   m_Children:
   - {fileID: 1728176247}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
 --- !u!114 &1377877457
 MonoBehaviour:
   m_ObjectHideFlags: 0
