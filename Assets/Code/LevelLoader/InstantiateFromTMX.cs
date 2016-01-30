@@ -10,7 +10,7 @@ public class InstantiateFromTMX : MonoBehaviour {
     public GameObject wall;
     public GameObject player;
     public GameObject enemy;
-    public GameObject pickup;
+    public GameObject spikes;
     public GameObject waypoint;
     public GameObject floor;
 	public GameObject death;
@@ -59,7 +59,9 @@ public class InstantiateFromTMX : MonoBehaviour {
                 }               
 				else if (val.Equals("DD")) {
 					GameObject.Instantiate(death, new Vector3(k * offset, l * offset,0), Quaternion.identity);
-				}                
+				} else if (val.Equals("SP")) {
+					GameObject.Instantiate(spikes, new Vector3(k * offset, l * offset,0), Quaternion.identity);
+				}               
                 else if (Regex.IsMatch(val, "[0-9][0-9]"))
                 {
                     wp = (GameObject)Instantiate(waypoint, new Vector3(k * offset, l * offset,0), Quaternion.identity);
