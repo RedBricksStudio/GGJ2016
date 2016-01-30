@@ -19,13 +19,13 @@ public class BulletScript : MonoBehaviour {
 		rig_bdy = GetComponent<Rigidbody2D>();
 		playerInput = Player.GetComponent<RegularInput> ();
 		if(playerInput.looking_right){
-			dir =Player.transform.right;
+			dir = Player.transform.right;
 			locScale = gameObject.transform.localScale;
 			locScale.x *= -1;
 			gameObject.transform.localScale = locScale;
 		}
 		else{
-			dir =-Player.transform.right;
+			dir =- Player.transform.right;
 		}
 		dir = dir.normalized;
 		dir*= speed;

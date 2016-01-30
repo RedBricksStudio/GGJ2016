@@ -33,16 +33,14 @@ public class PlayerAnimationController : MonoBehaviour {
 			m_anim.SetTrigger("jump");
 			jumping = true;
 		} else if (m_in.getGrounded() && jumping){
-			Debug.Log("Idle");
 			m_anim.SetTrigger("idle");
 			walking = false;			
 			jumping = false;			
 		} else {
-			if (Mathf.Abs(m_rb.velocity.x) > 0.05f && !walking)	{
-				Debug.Log("Walk");
+			if (Mathf.Abs(m_rb.velocity.x) > 0.5f && !walking)	{
 				m_anim.SetTrigger("walk");
 				walking = true;
-			} else if (Mathf.Abs(m_rb.velocity.x) <= 0.05f)	{
+			} else if (Mathf.Abs(m_rb.velocity.x) <= 0.5f)	{
 				m_anim.SetTrigger("idle");
 				walking = false;
 			}

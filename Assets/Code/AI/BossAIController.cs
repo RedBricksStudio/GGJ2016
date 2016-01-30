@@ -210,6 +210,7 @@ public class BossAIController : MonoBehaviour {
 	private void handleLookAroundEntered()
 	{
 		lookingAround = true;
+		markUniqueAnimator("idle");
 		if (needsToBeFlipped()) {
 			Flip();
 		}
@@ -219,7 +220,7 @@ public class BossAIController : MonoBehaviour {
 	{
 		if (playerIsInCage() && lookingAround) {	
 			Debug.Log("Player in cage");
-			StartCoroutine(Wait(1f));
+			StartCoroutine(Wait(0.5f));
 			lookingAround = false;
 		}
 	}
@@ -230,11 +231,15 @@ public class BossAIController : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter2D(Collision2D coll) {
-    	if ((coll.transform.position.y >= m_tr.position.y) && 
-			(coll.transform.position.x * m_tr.position.x >= 0)) 
+		
+		Collider2D collider = coll.collider;
+		
+		Vector3 contactPoint = coll.contacts[0].point;
+        Vector3 center = collider.bounds.center;
+		
+    	if ((contactPoint.x > center.x) || (contactPoint.x <= center.x)) 
 		{
 			if(!coll.gameObject.tag.Equals("Player")) {
-				Debug.Log("Boom");
 				ChangeState(BossStates.Stunned);    
 			} else {
 				//TODO: Attack player
@@ -248,7 +253,7 @@ public class BossAIController : MonoBehaviour {
 	}
 	
 	private bool playerIsInCage()
-    {
+    {		
         return ((m_playerToChase.position.x < upperRightCorner.position.x) &&
 				(m_playerToChase.position.y < upperRightCorner.position.y));		
     }
