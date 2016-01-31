@@ -97,6 +97,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11492070, guid: 65b101c6a5eb74fe982d76a8fe6c492a, type: 2}
+      propertyPath: musicClips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 11475676, guid: 65b101c6a5eb74fe982d76a8fe6c492a, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -616,6 +620,18 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 812247402}
+    - target: {fileID: 11473120, guid: 65b101c6a5eb74fe982d76a8fe6c492a, type: 2}
+      propertyPath: changeMusicOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11473120, guid: 65b101c6a5eb74fe982d76a8fe6c492a, type: 2}
+      propertyPath: musicToChangeTo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492070, guid: 65b101c6a5eb74fe982d76a8fe6c492a, type: 2}
+      propertyPath: musicClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 00d5ef646f3285542b131664e2b164a0, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65b101c6a5eb74fe982d76a8fe6c492a, type: 2}
   m_IsPrefabParent: 0
