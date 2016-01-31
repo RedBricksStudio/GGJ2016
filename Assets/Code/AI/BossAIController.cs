@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using KWorks.Wrappers;
 using System;
@@ -16,11 +17,13 @@ public class BossAIController : MonoBehaviour {
 	//Private Components
 	Transform m_tr;
 	Rigidbody2D m_rb;	
-	Animator m_anim;
+	Animator m_anim;	
+	SpriteRenderer m_spr;
 	
 	public GameObject Player;
 	public Transform upperRightCorner;
 	private Transform m_playerToChase;
+	
 			
 	Vector3 dir;
 	private float vel;
@@ -37,7 +40,11 @@ public class BossAIController : MonoBehaviour {
 	[SerializeField]
 	private float jumpDistancePadding = 1.0f;
 	[SerializeField]
-	private bool jumpEnabled = false;
+	private bool jumpEnabled = false;	
+	[SerializeField]
+	private int lives = 10;
+	[SerializeField]
+	private float freezeOnDeath = 1f;
 	
 	private bool lookingRight = true;
 	
@@ -47,6 +54,7 @@ public class BossAIController : MonoBehaviour {
 		m_tr = GetComponent<Transform>();
 		m_rb = GetComponent<Rigidbody2D>();
 		m_anim = GetComponent<Animator>();
+		m_spr = GetComponent<SpriteRenderer>();
 		if (Player != null) {
 			m_playerToChase = Player.transform;
 		}
@@ -220,7 +228,7 @@ public class BossAIController : MonoBehaviour {
 	{
 		if (playerIsInCage() && lookingAround) {	
 			Debug.Log("Player in cage");
-			StartCoroutine(Wait(0.5f));
+			StartCoroutine(Wait(0.3f));
 			lookingAround = false;
 		}
 	}
@@ -261,12 +269,8 @@ public class BossAIController : MonoBehaviour {
 	private IEnumerator Wait(float v)
     {
 		yield return new WaitForSeconds(v);
-		recalculateVelocity();
-		if (playerIsInCage()) {		
-			ChangeState(BossStates.Charging);
-		} else {
-			ChangeState(BossStates.LookAround);
-		}
+		recalculateVelocity();	
+		ChangeState(BossStates.Charging);
     }
 
 	private bool needsToBeFlipped() {
@@ -282,5 +286,36 @@ public class BossAIController : MonoBehaviour {
 	private void markUniqueAnimator(string s) {		
 		m_anim.SetTrigger(s);
 	}
+	
+	public void onDamage() {
+		
+		lives--;
+		
+		Debug.Log("Lives remaining: " + lives);
+		if (lives == 0) {
+			ChangeState(BossStates.Idle);
+			m_rb.velocity = Vector3.zero;
+			StartCoroutine(Blink(freezeOnDeath, true));			
+		} else {
+			StartCoroutine(Blink(0.2f, false));	
+		}
+	}
+	
+	private IEnumerator Blink(float seconds, bool bossDead)
+    {
+		int iterations = (int)(seconds / 0.1f);
+		for (int i = 0; i < iterations; i++) {
+			m_spr.color = Color.black;
+			yield return new WaitForSeconds(0.05f);
+			m_spr.color = Color.red;
+			yield return new WaitForSeconds(0.05f);	
+		}	
+		
+		if (bossDead) {
+			yield return new WaitForSeconds(0.2f);
+			SceneManager.LoadScene("BadEnding");
+		}
+    }	
+	
 	
 }
