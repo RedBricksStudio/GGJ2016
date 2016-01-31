@@ -20,4 +20,9 @@ public class KillPlayerOnContact : MonoBehaviour {
 		if (coll.gameObject.tag == "Player")
 			coll.gameObject.SendMessage("onDamage");
 	}
+
+	void OnTriggerEnter2D(Collider2D coll) {
+		if (coll.gameObject.tag == "Player")
+			coll.gameObject.SendMessage("onDamage");
+	}
 }
