@@ -263,16 +263,20 @@ public class BossAIController : MonoBehaviour {
 	}
 	
 	private bool playerIsInCage()
-    {		
-        return ((m_playerToChase.position.x < upperRightCorner.position.x) &&
+    {
+		return ((m_playerToChase.position.x < upperRightCorner.position.x) &&
 				(m_playerToChase.position.y < upperRightCorner.position.y));		
     }
 	
 	private IEnumerator Wait(float v)
     {
 		yield return new WaitForSeconds(v);
-		recalculateVelocity();	
-		ChangeState(BossStates.Charging);
+		recalculateVelocity();
+		if (playerIsInCage()) {	
+			ChangeState(BossStates.Charging);
+		} else {
+			ChangeState(BossStates.LookAround);
+		}
     }
 
 	private bool needsToBeFlipped() {
