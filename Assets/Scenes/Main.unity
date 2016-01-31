@@ -4276,7 +4276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ed237678c4f441588bc71faa279e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yOffset: 0.7
+  yOffset: 0.4
 --- !u!114 &704885165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4292,7 +4292,7 @@ MonoBehaviour:
   finalZoom: 2
   initialSpot: -1.23
   fadeDistance: 5
-  noFadeDistance: 0
+  noFadeDistance: 1
 --- !u!1 &705150914
 GameObject:
   m_ObjectHideFlags: 0
@@ -8067,6 +8067,10 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -0.039
       objectReference: {fileID: 0}
+    - target: {fileID: 103682, guid: eff31c8499824094985add965248e2e1, type: 2}
+      propertyPath: m_TagString
+      value: BulletSpawn
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eff31c8499824094985add965248e2e1, type: 2}
   m_IsPrefabParent: 0
@@ -8584,6 +8588,22 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6cd5d7957bcb4644eb03eabf43756eaa, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1794970323 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 103682, guid: eff31c8499824094985add965248e2e1, type: 2}
+  m_PrefabInternal: {fileID: 1681017561}
+--- !u!114 &1794970325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794970323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 774c0ce12ad8946f28b9979c0c9f43db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingTag: BulletSpawn
 --- !u!1001 &1841400113
 Prefab:
   m_ObjectHideFlags: 0

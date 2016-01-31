@@ -8,6 +8,7 @@ public class BulletScript : MonoBehaviour {
 	Vector3 dir;
 	float speed = 6f;
 	Vector3 locScale;
+	private float Flying_Time;
 
 	RegularInput playerInput;
 
@@ -16,6 +17,7 @@ public class BulletScript : MonoBehaviour {
 		Player = GameObject.FindGameObjectWithTag("Player");
 		rig_bdy = GetComponent<Rigidbody2D>();
 		playerInput = Player.GetComponent<RegularInput> ();
+		Flying_Time = Time.time;
 		if (playerInput.looking_right) {
 			dir = Player.transform.right;
 			locScale = gameObject.transform.localScale;
@@ -35,6 +37,9 @@ public class BulletScript : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Enemy") {
 			other.gameObject.SendMessage("onDamage");
+			Destroy (gameObject);
+		}
+		if(Time.time - Flying_Time > 0.3f){
 			Destroy (gameObject);
 		}
 	}
