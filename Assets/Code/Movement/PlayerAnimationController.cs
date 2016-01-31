@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using KWorks.Wrappers;
 
@@ -6,9 +7,9 @@ public class PlayerAnimationController : MonoBehaviour {
 
 	private Animator m_anim;
 	private Rigidbody2D m_rb;
-	private Transform m_tr;
-	
+	private Transform m_tr;	
 	private RegularInput2D m_in;
+	private SpriteRenderer m_spr;
 	
 	// Private fields	
 	private bool lookingRight = false;	
@@ -25,6 +26,7 @@ public class PlayerAnimationController : MonoBehaviour {
 		m_rb = GetComponent<Rigidbody2D>();
 		m_tr = GetComponent<Transform>();
 		m_in = GetComponent<RegularInput2D>();
+		m_spr = GetComponent<SpriteRenderer>();
 	}
 	
 	void Update () {	
@@ -69,5 +71,21 @@ public class PlayerAnimationController : MonoBehaviour {
 	private void Flip() {
 		m_tr.SetScaleX(m_tr.localScale.x * (-1));		
 		lookingRight = !lookingRight;
+	}
+	
+	public void onDamage() {
+		StartCoroutine(Death(0.6f));
+		m_rb.isKinematic = true;		
+	}
+	
+	private IEnumerator Death(float seconds) {
+		int iterations = (int)(seconds / 0.1f);
+		for (int i = 0; i < iterations; i++) {
+			m_spr.color = Color.black;
+			yield return new WaitForSeconds(0.05f);
+			m_spr.color = Color.white;
+			yield return new WaitForSeconds(0.05f);	
+		}	
+		SceneManager.LoadScene("GameOver");
 	}
 }

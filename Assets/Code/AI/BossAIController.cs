@@ -250,7 +250,9 @@ public class BossAIController : MonoBehaviour {
 			if(!coll.gameObject.tag.Equals("Player")) {
 				ChangeState(BossStates.Stunned);    
 			} else {
-				//TODO: Attack player
+				m_rb.isKinematic = false;
+				m_anim.SetTrigger("idle");
+				Player.SendMessage("onDamage");
 			}
 		}
     }
@@ -315,7 +317,5 @@ public class BossAIController : MonoBehaviour {
 			yield return new WaitForSeconds(0.2f);
 			SceneManager.LoadScene("BadEnding");
 		}
-    }	
-	
-	
+    }
 }

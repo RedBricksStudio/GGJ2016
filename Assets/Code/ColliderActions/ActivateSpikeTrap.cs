@@ -5,15 +5,12 @@ using System.Collections;
 public class ActivateSpikeTrap : MonoBehaviour {
 
 	private Animator m_anim;
-	private KillPlayerOnContact playerKill; 
 	
 	bool deployed = false;
 
 	// Use this for initialization
 	void Start () {
-		m_anim = GetComponent<Animator>();
-		playerKill = GetComponent<KillPlayerOnContact>();
-		playerKill.enabled = false;
+		m_anim = GetComponent<Animator>();		
 	}
 	
 	// Update is called once per frame
@@ -24,7 +21,8 @@ public class ActivateSpikeTrap : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Player") {
 			other.GetComponent<Rigidbody2D>().isKinematic = true;
-			StartCoroutine(Wait(0.7f));
+			//StartCoroutine(Wait(0.7f));
+			other.SendMessage("onDamage");
 			if (!deployed) {
 				m_anim.SetTrigger("deploy");
 				deployed = true;

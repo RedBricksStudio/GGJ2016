@@ -18,6 +18,6 @@ public class KillPlayerOnContact : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Player")
-			SceneManager.LoadScene("GameOver");
+			coll.gameObject.SendMessage("onDamage");
 	}
 }
