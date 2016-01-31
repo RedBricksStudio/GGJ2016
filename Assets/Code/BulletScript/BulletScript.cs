@@ -39,7 +39,7 @@ public class BulletScript : MonoBehaviour {
 			other.gameObject.SendMessage("onDamage");
 			Destroy (gameObject);
 		}
-		if(Time.time - Flying_Time > 0.3f){
+		if(Time.time - Flying_Time > 0.1f){
 			Destroy (gameObject);
 		}
 	}
